@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+
+<modDesc descVersion="108">
+
+    <author>BigMacJ</author>
+    <version>1.0.0.0</version>
+
+    <title>
+        <en>Dealer Haulage</en>
+    </title>
+
+    <description>
+        <en>Dealer haulage service for bought and leased machinery and implements.</en>
+    </description>
+
+    <extraSourceFiles>
+        <sourceFile filename="scripts/deliveryService.lua"/>
+    </extraSourceFiles>
+
+    <actions>
+        <action name="DS_TEST" category="ONFOOT VEHICLE" axisType="HALF"/>
+    </actions>
+
+    <inputBinding>
+        <actionBinding action="DS_TEST">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_j"/>
+        </actionBinding>
+    </inputBinding>
+
+    <l10n>
+        <text name="input_DS_TEST">
+            <en>Dealer Haulage</en>
+        </text>
+    </l10n>
+
+</modDesc>

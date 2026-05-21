@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+
+<inputBinding>
+
+    <actionBinding action="DS_TEST">
+        <keyboard primary="KEY_l"/>
+    </actionBinding>
+
+</inputBinding>
