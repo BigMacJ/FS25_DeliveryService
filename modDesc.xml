@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 
-<modDesc descVersion="108">
+<modDesc descVersion="110">
 
     <author>BigMacJ</author>
     <version>1.0.0.0</version>
@@ -10,7 +10,7 @@
     </title>
 
     <description>
-        <en>Dealer haulage service for bought and leased machinery and implements.</en>
+        <en><![CDATA[Dealer haulage service for bought and leased machinery and implements.]]></en>
     </description>
 
     <extraSourceFiles>
@@ -27,10 +27,11 @@
         </actionBinding>
     </inputBinding>
 
-    <l10n>
-        <text name="input_DS_TEST">
-            <en>Dealer Haulage</en>
-        </text>
-    </l10n>
+<l10n>
+    <text name="input_DS_TEST">
+        <en>Dealer Haulage</en>
+        <it>Spedizione del Concessionario</it>
+    </text>
+</l10n>
 
 </modDesc>
