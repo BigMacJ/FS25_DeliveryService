@@ -1,0 +1,52 @@
+name: Validate and Package Build 57 PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install validators
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.1 libxml2-utils zip
+
+      - name: Validate
+        run: |
+          luac5.1 -p deliveryService.lua
+          luac5.1 -p scripts/B57DestinationOrder.lua
+          luac5.1 -p scripts/B57CollisionEvidence.lua
+          luac5.1 -p scripts/B57DepartureHold.lua
+          xmllint --noout build57/package_modDesc.xml
+
+      - name: Package
+        run: |
+          rm -rf package
+          mkdir -p package/scripts package/docs
+          cp deliveryService.lua package/deliveryService.lua
+          cp build57/package_modDesc.xml package/modDesc.xml
+          cp scripts/B57DestinationOrder.lua package/scripts/
+          cp scripts/B57CollisionEvidence.lua package/scripts/
+          cp scripts/B57DepartureHold.lua package/scripts/
+          if [ -f inputBinding.xml ]; then cp inputBinding.xml package/inputBinding.xml; fi
+          printf '%s\n' \
+            'FS25_BOR_DealerHaulage - Build 57' \
+            '' \
+            'Complete Dealer Haulage service with Build 57 destination ordering and collision evidence.' \
+            'Install using the exact filename FS25_BOR_DealerHaulage.zip.' \
+            > package/docs/BUILD57_README.txt
+          cd package
+          zip -r ../FS25_BOR_DealerHaulage.zip .
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: FS25_BOR_DealerHaulage
+          path: FS25_BOR_DealerHaulage.zip
+          if-no-files-found: error
