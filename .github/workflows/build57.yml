@@ -1,0 +1,59 @@
+name: Build FS25 BOR Dealer Haulage 57
+
+on:
+  push:
+    branches:
+      - build57
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install validators
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.1 libxml2-utils zip
+
+      - name: Validate Lua and XML
+        run: |
+          luac5.1 -p deliveryService.lua
+          luac5.1 -p scripts/B57DestinationOrder.lua
+          luac5.1 -p scripts/B57CollisionEvidence.lua
+          luac5.1 -p scripts/B57DepartureHold.lua
+          xmllint --noout build57/package_modDesc.xml
+
+      - name: Build mod ZIP
+        run: |
+          rm -rf package
+          mkdir -p package/scripts package/docs
+          cp deliveryService.lua package/deliveryService.lua
+          cp build57/package_modDesc.xml package/modDesc.xml
+          cp scripts/B57DestinationOrder.lua package/scripts/
+          cp scripts/B57CollisionEvidence.lua package/scripts/
+          cp scripts/B57DepartureHold.lua package/scripts/
+          if [ -f inputBinding.xml ]; then cp inputBinding.xml package/inputBinding.xml; fi
+          printf '%s\n' \
+            'FS25_BOR_DealerHaulage - Build 57' \
+            '' \
+            'Complete recovered Dealer Haulage service plus:' \
+            '- last used AutoDrive destination pinned first' \
+            '- remaining destinations sorted alphabetically' \
+            '- duplicate destination entries removed' \
+            '- nearest object/vehicle evidence logged for collision reasons' \
+            '- 1.8 second clear-path hold before AutoDrive departure' \
+            '' \
+            'Install as FS25_BOR_DealerHaulage.zip.' \
+            > package/docs/BUILD57_README.txt
+          cd package
+          zip -r ../FS25_BOR_DealerHaulage.zip .
+
+      - name: Upload mod
+        uses: actions/upload-artifact@v4
+        with:
+          name: FS25_BOR_DealerHaulage
+          path: FS25_BOR_DealerHaulage.zip
+          if-no-files-found: error
