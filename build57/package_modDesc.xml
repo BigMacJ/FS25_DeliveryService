@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="110">
+    <author>BigMacJ</author>
+    <version>0.57.0.0</version>
+    <title>
+        <en>BOR Dealer Haulage</en>
+    </title>
+    <description>
+        <en>British Operational Realism dealer haulage for bought, leased and hire-purchased machinery. Build 57 pins the last AutoDrive destination first, sorts remaining destinations alphabetically, removes duplicates and adds collision evidence plus a safe departure hold.</en>
+    </description>
+    <extraSourceFiles>
+        <sourceFile filename="deliveryService.lua"/>
+        <sourceFile filename="scripts/B57DestinationOrder.lua"/>
+        <sourceFile filename="scripts/B57CollisionEvidence.lua"/>
+        <sourceFile filename="scripts/B57DepartureHold.lua"/>
+    </extraSourceFiles>
+    <actions>
+        <action name="DS_TEST" category="ONFOOT VEHICLE" axisType="HALF"/>
+    </actions>
+    <inputBinding>
+        <actionBinding action="DS_TEST">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_j"/>
+        </actionBinding>
+    </inputBinding>
+    <l10n>
+        <text name="input_DS_TEST">
+            <en>Dealer Haulage</en>
+        </text>
+    </l10n>
+</modDesc>
